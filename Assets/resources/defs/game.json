@@ -1,0 +1,17 @@
+{
+	"region_size": 12",
+	"items_per_region": 50,
+	"gen_time": 5000,
+	"range": {
+		"tree": 10,
+		"bush": 30,
+		"puddle": 10,
+		"rock": 50,
+	},
+	"map_items":{
+		"tree": "tree.prefab",
+		"bush": "bush.prefab",
+		"puddle": "puddle.prefab",
+		"rock": "rock.prefab"
+	}
+}
