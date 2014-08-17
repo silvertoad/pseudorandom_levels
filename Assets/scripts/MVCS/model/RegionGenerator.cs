@@ -12,7 +12,7 @@ namespace mvscs.model
         public GameDefs Defs { get; set; }
 
         [Inject]
-        public GamePersistent Game { get; set; }
+        public PersistentModel Game { get; set; }
 
         RegionHashCalc HashCalc;
 
@@ -39,8 +39,39 @@ namespace mvscs.model
             }
 
             var region = new RegionModel ();
+            region.Random = random;
             region.MapItems = items.ToArray ();
+            TryGrowBush (region);
             return region;
+        }
+
+        void TryGrowBush (RegionModel _region)
+        {
+            int numBushs;
+            if (Game.BushPerRegion.TryGetValue (_region.Position, out numBushs))
+                for (var i = 0; i < numBushs; i++)
+                    GrowBush (_region);
+        }
+
+        public bool GrowBush (RegionModel _region)
+        {
+            // TODO: fix that trash
+            var availableCells = new List<Point<int>> ();
+            for (int i = 0; i < Defs.RegionSize; i++)
+                for (int j = 0; j < Defs.RegionSize; j++)
+                    availableCells.Add (new Point<int>{ X = i, Y = j });
+            foreach (var item in _region.MapItems)
+                availableCells.Remove (item.Position);
+            if (availableCells.Count == 0)
+                return false;
+
+            var bushItem = new MapItem (Defs.MapItems ["bush"]);
+            bushItem.Position = GetItemPosition (availableCells, _region.Random);
+            var newItems = _region.MapItems.ToList ();
+            newItems.Add (bushItem);
+            _region.MapItems = newItems.ToArray ();
+
+            return true;
         }
 
         MapItem ChooseItem (Random _random)

@@ -67,6 +67,11 @@ namespace mvscs.model
     {
         public MapItemDef Def;
         public int Percent;
+
+        public override string ToString ()
+        {
+            return string.Format ("[Range] Def = {0}, Percent = {1}.", Def, Percent);
+        }
     }
 
     public struct MapItemDef
@@ -78,6 +83,16 @@ namespace mvscs.model
         {
             Name = _name;
             Asset = _asset;
+        }
+
+        public bool Equals (MapItemDef _other)
+        {
+            return Asset == _other.Asset && Name == _other.Name;
+        }
+
+        public override string ToString ()
+        {
+            return string.Format ("[MapItemDef] Name = {0}, Asset = {1}", Name, Asset);
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using mvscs.model;
+using System.Collections.Generic;
 
 namespace test
 {
@@ -12,6 +13,26 @@ namespace test
         {
             var gameDefs = new GameDefs ();
             gameDefs.Init (defsCommon);
+
+            Assert.AreEqual (12, gameDefs.RegionSize);
+            Assert.AreEqual (50, gameDefs.ItemsPerRegion);
+            Assert.AreEqual (5000, gameDefs.GenTime);
+
+            var expectedMapItems = new Dictionary<string, MapItemDef> {
+                { "tree", new MapItemDef ("tree", "tree.prefab") },
+                { "bush", new MapItemDef ("bush", "bush.prefab") },
+                { "puddle", new MapItemDef ("puddle", "puddle.prefab") },
+                { "rock", new MapItemDef ("rock", "rock.prefab") }
+            };
+            Assert.AreEqual (expectedMapItems, gameDefs.MapItems);
+
+            var expectedRanges = new Range[] {
+                new Range (){ Percent = 10,  Def = new MapItemDef ("tree", "tree.prefab") },
+                new Range (){ Percent = 10,  Def = new MapItemDef ("puddle", "puddle.prefab") },
+                new Range (){ Percent = 30,  Def = new MapItemDef ("bush", "bush.prefab") },
+                new Range (){ Percent = 50,  Def = new MapItemDef ("rock", "rock.prefab") }
+            };
+            Assert.AreEqual (expectedRanges, gameDefs.ItemRange);
         }
 
         [Test]
