@@ -23,7 +23,7 @@ namespace test
             var generator = binder.GetInstance<RegionGenerator> ();
             generator.UpdateSeed ();
 
-            var region = generator.GetRegionModel (new Point<int>{ X = 0, Y = 0 });
+            var region = generator.GetRegionModel (new Point<int> (0, 0));
 
             var expectedMapItems = new MapItem[] {
                 new MapItem (defs.MapItems ["puddle"]){ Position = new Point<int> (1, 2) },

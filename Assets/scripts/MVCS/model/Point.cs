@@ -1,9 +1,12 @@
 ﻿using System;
 
-public struct Point<TType>
+/// <summary>
+/// Struct for X, Y. Note: when use addition operator TType cast to double 
+/// </summary>
+public struct Point<TType> where TType : IConvertible
 {
-    public TType X;
-    public TType Y;
+    public readonly TType X;
+    public readonly TType Y;
 
     public Point (TType _x, TType _y)
     {
@@ -24,6 +27,17 @@ public struct Point<TType>
         } else {
             return false;
         }
+    }
+
+    public static Point<TType> operator + (Point<TType> _lhs, Point<TType> _rhs)
+    {
+        var x = Convert.ToDouble (_lhs.X) + Convert.ToDouble (_rhs.X);
+        var y = Convert.ToDouble (_lhs.Y) + Convert.ToDouble (_rhs.Y);
+
+        return new Point<TType> (
+            (TType)Convert.ChangeType (x, typeof(TType)),
+            (TType)Convert.ChangeType (y, typeof(TType))
+        );
     }
 
     public static bool operator== (Point<TType> _lhs, Point<TType> _rhs)

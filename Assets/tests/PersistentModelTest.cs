@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using mvscs.model;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace test
 {
@@ -31,6 +32,14 @@ namespace test
             persisitent.Init (invalidSource);
         }
 
+        [TestCase]
+        public void SomeCase ()
+        {
+            var a = new Point<float> (1.5f, 1.2f);
+            var b = new Point<float> (1.2f, 1.1f);
+            Console.WriteLine (a + b);
+        }
+
         const string persistentSource = @"{
     ""seed"": 1453,
     ""player_pos"": ""-1;0"",
@@ -45,4 +54,3 @@ namespace test
 }";
     }
 }
-

@@ -29,7 +29,7 @@ namespace mvscs.model
             var availableCells = new List<Point<int>> ();
             for (int i = 0; i < Defs.RegionSize; i++)
                 for (int j = 0; j < Defs.RegionSize; j++)
-                    availableCells.Add (new Point<int>{ X = i, Y = j });
+                    availableCells.Add (new Point<int> (i, j));
 
             var items = new List<MapItem> ();
             for (var i = 0; i < Defs.ItemsPerRegion; i++) {
@@ -59,7 +59,7 @@ namespace mvscs.model
             var availableCells = new List<Point<int>> ();
             for (int i = 0; i < Defs.RegionSize; i++)
                 for (int j = 0; j < Defs.RegionSize; j++)
-                    availableCells.Add (new Point<int>{ X = i, Y = j });
+                    availableCells.Add (new Point<int> (i, j));
             foreach (var item in _region.MapItems)
                 availableCells.Remove (item.Position);
             if (availableCells.Count == 0)
