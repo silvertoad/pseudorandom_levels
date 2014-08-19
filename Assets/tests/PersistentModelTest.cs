@@ -1,8 +1,6 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using mvscs.model;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace test
 {
@@ -18,14 +16,11 @@ namespace test
             Assert.AreEqual (1453, persisitent.Seed);
             Assert.AreEqual (new Point<int> (-1, 0), persisitent.PlayerPosition);
 
-            var expectedBushs = new Dictionary<Point<int>, int> {
-                { new Point<int> (0, 0), 2 }
-            };
-            Assert.AreEqual (expectedBushs, persisitent.BushPerRegion);
+            Assert.AreEqual (2, persisitent.GetNumBushs (new Point<int> (0, 0)));
         }
 
         [TestCase]
-        [ExpectedException (typeof(PersistentModel.PersistentModelException))]
+        [ExpectedException (typeof(System.FormatException))]
         public void InvalidBushs ()
         {
             var persisitent = new PersistentModel ();
@@ -35,9 +30,7 @@ namespace test
         [TestCase]
         public void SomeCase ()
         {
-            var a = new Point<float> (1.5f, 1.2f);
-            var b = new Point<float> (1.2f, 1.1f);
-            Console.WriteLine (a + b);
+
         }
 
         const string persistentSource = @"{

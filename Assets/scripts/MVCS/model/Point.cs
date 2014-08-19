@@ -14,6 +14,13 @@ public struct Point<TType> where TType : IConvertible
         Y = _y;
     }
 
+    public Point (string _source)
+    {
+        var coords = _source.Split (';');
+        X = (TType)Convert.ChangeType (coords [0], typeof(TType));
+        Y = (TType)Convert.ChangeType (coords [1], typeof(TType));
+    }
+
     public override string ToString ()
     {
         return string.Format ("Point: x: {0}, y: {1}.", X, Y);

@@ -11,7 +11,7 @@ namespace mvscs.model
 
         public int GenTime { get; private set; }
 
-        public Range[] ItemRange { get; private set; }
+        public ItemRatio[] ItemRange { get; private set; }
 
         public Dictionary<string, MapItemDef> MapItems { get; private set; }
 
@@ -29,15 +29,15 @@ namespace mvscs.model
 
         void FillRanges (Dictionary<string, object> _mapItemsSource)
         {
-            var ranges = new List<Range> ();
+            var ranges = new List<ItemRatio> ();
             var percentSum = 0;
             foreach (var rangeEntity in _mapItemsSource) {
                 var mapItemName = rangeEntity.Key;
                 if (!MapItems.ContainsKey (mapItemName))
                     throw new GameDefsException (string.Format ("Undefined map item: \"{0}\".", mapItemName));
 
-                var range = new Range{ Def = MapItems [mapItemName], Percent = (int)rangeEntity.Value };
-                percentSum += range.Percent;
+                var range = new ItemRatio{ Def = MapItems [mapItemName], Ratio = (int)rangeEntity.Value };
+                percentSum += range.Ratio;
                 ranges.Add (range);
             }
 
@@ -45,9 +45,9 @@ namespace mvscs.model
                 throw new GameDefsException (string.Format ("Sum of the shares is not equal to 100."));
 
             // Сортируем для работы алгоритма случайного выбора
-            ranges.Sort ((Range x, Range y) => {
-                if (x.Percent == y.Percent) return 0;
-                return x.Percent < y.Percent ? -1 : 1;
+            ranges.Sort ((ItemRatio x, ItemRatio y) => {
+                if (x.Ratio == y.Ratio) return 0;
+                return x.Ratio < y.Ratio ? -1 : 1;
             });
 
             ItemRange = ranges.ToArray ();
@@ -63,14 +63,14 @@ namespace mvscs.model
         }
     }
 
-    public struct Range
+    public struct ItemRatio
     {
         public MapItemDef Def;
-        public int Percent;
+        public int Ratio;
 
         public override string ToString ()
         {
-            return string.Format ("[Range] Def = {0}, Percent = {1}.", Def, Percent);
+            return string.Format ("[ItemRatio] Def = {0}, Ratio = {1}.", Def, Ratio);
         }
     }
 

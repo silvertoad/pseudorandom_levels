@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace mvscs.model
 {
@@ -26,15 +25,15 @@ namespace mvscs.model
             new Point<int> (0, -1),
             new Point<int> (1, -1),
         };
-        /*
+
         RegionModel[] GetPointsArownd (Point<int> _center)
         {
             var regions = new List<RegionModel> ();
             foreach (var point in arrowndDeltas) {
-                //var regionPos = _center + point;
-                //regions.Add (regionsCache.GetRegion (regionPos));
+                var regionPos = _center + point;
+                regions.Add (regionsCache.GetRegion (regionPos));
             }
-        }*/
+            return regions.ToArray ();
+        }
     }
 }
-

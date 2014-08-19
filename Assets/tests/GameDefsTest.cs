@@ -26,11 +26,11 @@ namespace test
             };
             Assert.AreEqual (expectedMapItems, gameDefs.MapItems);
 
-            var expectedRanges = new Range[] {
-                new Range (){ Percent = 10,  Def = new MapItemDef ("tree", "tree.prefab") },
-                new Range (){ Percent = 10,  Def = new MapItemDef ("puddle", "puddle.prefab") },
-                new Range (){ Percent = 30,  Def = new MapItemDef ("bush", "bush.prefab") },
-                new Range (){ Percent = 50,  Def = new MapItemDef ("rock", "rock.prefab") }
+            var expectedRanges = new ItemRatio[] {
+                new ItemRatio (){ Ratio = 10,  Def = new MapItemDef ("tree", "tree.prefab") },
+                new ItemRatio (){ Ratio = 10,  Def = new MapItemDef ("puddle", "puddle.prefab") },
+                new ItemRatio (){ Ratio = 30,  Def = new MapItemDef ("bush", "bush.prefab") },
+                new ItemRatio (){ Ratio = 50,  Def = new MapItemDef ("rock", "rock.prefab") }
             };
             Assert.AreEqual (expectedRanges, gameDefs.ItemRange);
         }

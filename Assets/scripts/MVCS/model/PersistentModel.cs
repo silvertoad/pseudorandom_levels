@@ -9,47 +9,35 @@ namespace mvscs.model
 
         public Point<int> PlayerPosition { get; private set; }
 
-        public Dictionary<Point<int>, int> BushPerRegion { get; private set; }
-
-        public void SetSeed (int _seed)
-        {
-            Seed = _seed;
-        }
+        Dictionary<Point<int>, int> BushPerRegion;
 
         public void Init (string _source)
         {
             var jsonSource = JSON.Parse (_source);
 
             Seed = (int)jsonSource ["seed"];
-            PlayerPosition = ParsePoint ((string)jsonSource ["player_pos"]);
+            PlayerPosition = new Point<int> ((string)jsonSource ["player_pos"]);
 
             var regionBushs = new Dictionary<Point<int>, int> ();
             var bushsSource = (Dictionary<string, object>)jsonSource ["bushs"];
             foreach (var kvp in bushsSource) {
-                var point = ParsePoint (kvp.Key);
+                var point = new Point<int> (kvp.Key);
                 var count = Convert.ToInt32 (kvp.Value);
                 regionBushs.Add (point, count);
             }
             BushPerRegion = regionBushs;
         }
 
-        static Point<int> ParsePoint (string _source)
+        public void SetSeed (int _seed)
         {
-            try {
-                var parts = _source.Split (';');
-                var x = Convert.ToInt32 (parts [0]);
-                var y = Convert.ToInt32 (parts [1]);
-                return new Point<int> (x, y);
-            } catch (Exception e) {
-                throw new PersistentModelException (string.Format ("Invalid Point format: {0}", e.Message));
-            }
+            Seed = _seed;
         }
 
-        public class PersistentModelException : Exception
+        public int GetNumBushs (Point<int> _regionPos)
         {
-            public PersistentModelException (string _message) : base (_message)
-            {
-            }
+            if (BushPerRegion.ContainsKey (_regionPos))
+                return BushPerRegion [_regionPos];
+            return 0;
         }
     }
 }

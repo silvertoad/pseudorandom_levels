@@ -34,7 +34,7 @@ namespace test
             //TraceRegion (region, defs);
             Assert.AreEqual (expectedMapItems, region.MapItems);
         
-            generator.GrowBush (region);
+            region.GrowBush ();
             var expectedGrowedMapItems = new MapItem[] {
                 new MapItem (defs.MapItems ["puddle"]){ Position = new Point<int> (1, 2) },
                 new MapItem (defs.MapItems ["bush"]){ Position = new Point<int> (3, 2) },
