@@ -58,10 +58,13 @@ namespace test
         }
 
         const string defsSource = @"{
-    ""region_size"": 4,
-    ""items_per_region"": 2,
-    ""gen_time"": 5000,
-    ""cache_size"": 2,
+    ""region"": {
+        ""size"": 4,
+        ""num_items"": 2,
+        ""gen_time"": 5000,
+        ""cache_size"": 2,
+        ""cell_size"": 30
+    },
     ""range"": {
         ""tree"": 10,
         ""bush"": 30,

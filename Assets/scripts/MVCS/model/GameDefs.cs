@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace mvscs.model
 {
@@ -13,6 +14,8 @@ namespace mvscs.model
 
         public int CacheSize { get; private set; }
 
+        public int CellSize { get; private set; }
+
         public ItemRatio[] ItemRange { get; private set; }
 
         public Dictionary<string, MapItemDef> MapItems { get; private set; }
@@ -20,14 +23,33 @@ namespace mvscs.model
         public void Init (string _source)
         {
             Dictionary<string, object> source = JSON.Parse (_source);
-
-            RegionSize = (int)source ["region_size"];
-            ItemsPerRegion = (int)source ["items_per_region"];
-            GenTime = (int)source ["gen_time"];
-            CacheSize = (int)source ["cache_size"];
+            RegionSize = CheckAndGet<int> ("region.size", source);
+            ItemsPerRegion = CheckAndGet<int> ("region.num_items", source);
+            GenTime = CheckAndGet<int> ("region.gen_time", source);
+            CacheSize = CheckAndGet<int> ("region.cache_size", source);
+            CellSize = CheckAndGet<int> ("region.cell_size", source);
 
             FillMapItems ((Dictionary<string, object>)source ["map_items"]);
             FillRanges ((Dictionary<string, object>)source ["range"]);
+        }
+
+        TReturnType CheckAndGet<TReturnType> (string _key, Dictionary<string, object> _source)
+        {
+            var path = _key.Split ('.');
+            Dictionary<string, object> ptr = _source;
+            for (var i = 0; i < path.Length; i++) {
+                var key = path [i];
+                object value;
+                if (!ptr.TryGetValue (key, out value)) {
+                    var failedPath = String.Join (".", path.ToList ().GetRange (0, i + 1).ToArray ());
+                    throw new GameDefsException (string.Format ("Missed required field: \"{0}\"", failedPath));
+                }
+                if (i == path.Length - 1)
+                    return (TReturnType)value;
+                else
+                    ptr = (Dictionary<string, object>)value;
+            }
+            throw new GameDefsException (string.Format ("Missed required field: \"{0}\"", _key));
         }
 
         void FillRanges (Dictionary<string, object> _mapItemsSource)

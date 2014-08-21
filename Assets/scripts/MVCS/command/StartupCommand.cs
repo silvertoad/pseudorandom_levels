@@ -1,33 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
 using strange.extensions.command.impl;
-using core.resources;
-using command.resource;
-using command.server;
+using mvscs.model;
 
-public class StartupCommand : Command
+namespace command
 {
-    [Inject]
-    public IResourceLoader loader  { get; set; }
-
-    [Inject]
-    public appsignals.StartInitSignal onInitStart { get ; set; }
-
-    public override void Execute ()
+    public class StartupCommand : Command
     {
-        AddPreloader ();
+        [Inject]
+        public GameDefs defs { get; set; }
 
-        var initSequence = commandBinder.Bind<appsignals.StartInitSignal> ().InSequence ();
-        initSequence.To<ServerStatusCommand> ();
-        initSequence.To<LoadVersionsCommand> ();
-        loader.AddInitCommands (initSequence);
-        initSequence.To<LoadStartupBundlesCommand> ();
+        [Inject]
+        public GameDefs persistent { get; set; }
 
-        onInitStart.Dispatch ();
-    }
+        public override void Execute ()
+        {
 
-    void AddPreloader ()
-    {
-        var preloader = Resources.Load<GameObject> ("GUI/preloader/DialogLoading");
-        NGUITools.AddChild (EntryPoint.GUIRoot, preloader);
+        }
     }
 }

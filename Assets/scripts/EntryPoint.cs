@@ -3,13 +3,11 @@ using strange.extensions.context.impl;
 
 public class EntryPoint : ContextView
 {
-    [SerializeField] GameObject gUIRoot;
-    // трэш - выпилить с появлением GUI системы
-    public static GameObject GUIRoot;
+    public GameObject GUI;
+    public GameObject World;
 
     void Start ()
     {
-        GUIRoot = gUIRoot;
         context = new AppContext (this, true);
         context.Start ();
     }

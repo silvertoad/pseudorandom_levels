@@ -53,9 +53,13 @@ namespace test
         }
 
         string defsCommon = @"{
-    ""region_size"": 12,
-    ""items_per_region"": 50,
-    ""gen_time"": 5000,
+    ""region"": {
+        ""size"": 12,
+        ""num_items"": 50,
+        ""gen_time"": 5000,
+        ""cache_size"": 30,
+        ""cell_size"": 30
+    },
     ""cache_size"": 30,
     ""range"": {
         ""tree"": 10,
@@ -72,9 +76,13 @@ namespace test
 }";
 
         string defsInvalid1 = @"{
-    ""region_size"": 12,
-    ""items_per_region"": 50,
-    ""gen_time"": 5000,
+    ""region"": {
+        ""size"": 12,
+        ""num_items"": 50,
+        ""gen_time"": 5000,
+        ""cache_size"": 30,
+        ""cell_size"": 30
+    },
     ""cache_size"": 30,
     ""range"": {
         ""tree"": 10,
@@ -90,10 +98,13 @@ namespace test
 }";
 
         string defsInvalid2 = @"{
-    ""region_size"": 12,
-    ""items_per_region"": 50,
-    ""gen_time"": 5000,
-    ""cache_size"": 30,
+    ""region"": {
+        ""size"": 12,
+        ""num_items"": 50,
+        ""gen_time"": 5000,
+        ""cache_size"": 30,
+        ""cell_size"": 30
+    },
     ""range"": {
         ""tree"": 10,
         ""bush"": 30,

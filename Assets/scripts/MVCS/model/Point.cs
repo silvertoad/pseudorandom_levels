@@ -3,7 +3,7 @@
 /// <summary>
 /// Struct for X, Y. Note: when use addition operator TType cast to double 
 /// </summary>
-public struct Point<TType> where TType : IConvertible
+public class Point<TType> where TType : IConvertible
 {
     public readonly TType X;
     public readonly TType Y;
@@ -12,6 +12,10 @@ public struct Point<TType> where TType : IConvertible
     {
         X = _x;
         Y = _y;
+    }
+
+    public Point ()
+    {
     }
 
     public Point (string _source)
