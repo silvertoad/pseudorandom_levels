@@ -11,6 +11,8 @@ namespace mvscs.model
 
         public int GenTime { get; private set; }
 
+        public int CacheSize { get; private set; }
+
         public ItemRatio[] ItemRange { get; private set; }
 
         public Dictionary<string, MapItemDef> MapItems { get; private set; }
@@ -22,6 +24,7 @@ namespace mvscs.model
             RegionSize = (int)source ["region_size"];
             ItemsPerRegion = (int)source ["items_per_region"];
             GenTime = (int)source ["gen_time"];
+            CacheSize = (int)source ["cache_size"];
 
             FillMapItems ((Dictionary<string, object>)source ["map_items"]);
             FillRanges ((Dictionary<string, object>)source ["range"]);

@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using mvscs.model;
-using System.Collections.Generic;
 
 namespace test
 {
@@ -25,12 +24,6 @@ namespace test
         {
             var persisitent = new PersistentModel ();
             persisitent.Init (invalidSource);
-        }
-
-        [TestCase]
-        public void SomeCase ()
-        {
-
         }
 
         const string persistentSource = @"{

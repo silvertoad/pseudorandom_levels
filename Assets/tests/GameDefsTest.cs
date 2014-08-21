@@ -17,6 +17,7 @@ namespace test
             Assert.AreEqual (12, gameDefs.RegionSize);
             Assert.AreEqual (50, gameDefs.ItemsPerRegion);
             Assert.AreEqual (5000, gameDefs.GenTime);
+            Assert.AreEqual (30, gameDefs.CacheSize);
 
             var expectedMapItems = new Dictionary<string, MapItemDef> {
                 { "tree", new MapItemDef ("tree", "tree.prefab") },
@@ -55,6 +56,7 @@ namespace test
     ""region_size"": 12,
     ""items_per_region"": 50,
     ""gen_time"": 5000,
+    ""cache_size"": 30,
     ""range"": {
         ""tree"": 10,
         ""bush"": 30,
@@ -73,6 +75,7 @@ namespace test
     ""region_size"": 12,
     ""items_per_region"": 50,
     ""gen_time"": 5000,
+    ""cache_size"": 30,
     ""range"": {
         ""tree"": 10,
         ""bush"": 30,
@@ -90,6 +93,7 @@ namespace test
     ""region_size"": 12,
     ""items_per_region"": 50,
     ""gen_time"": 5000,
+    ""cache_size"": 30,
     ""range"": {
         ""tree"": 10,
         ""bush"": 30,

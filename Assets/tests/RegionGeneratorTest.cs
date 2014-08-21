@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using strange.extensions.injector.impl;
 using mvscs.model;
-using System;
+using test.utils;
 
 namespace test
 {
@@ -11,19 +11,12 @@ namespace test
         [Test]
         public void Common ()
         {
-            var binder = new InjectionBinder ();
-            binder.Bind<GameDefs> ().To<GameDefs> ().ToSingleton ();
-            binder.Bind<RegionGenerator> ().To<RegionGenerator> ().ToSingleton ();
-            binder.Bind<PersistentModel> ().To<PersistentModel> ().ToSingleton ();
+            var binder = TestUtils.InitBinder (defsSource, persistentSource);
 
             var defs = binder.GetInstance<GameDefs> ();
-            defs.Init (defsSource);
-            var persistent = binder.GetInstance<PersistentModel> ();
-            persistent.Init (persistentSource);
-            var generator = binder.GetInstance<RegionGenerator> ();
-            generator.UpdateSeed ();
+            var regionCache = binder.GetInstance<RegionCache> ();
 
-            var region = generator.GetRegionModel (new Point<int> (0, 0));
+            var region = regionCache.GetRegion (new Point<int> (0, 0));
 
             var expectedMapItems = new MapItem[] {
                 new MapItem (defs.MapItems ["puddle"]){ Position = new Point<int> (1, 2) },
@@ -31,7 +24,6 @@ namespace test
                 new MapItem (defs.MapItems ["bush"]){ Position = new Point<int> (2, 2) },
                 new MapItem (defs.MapItems ["bush"]){ Position = new Point<int> (3, 3) }
             };
-            //TraceRegion (region, defs);
             Assert.AreEqual (expectedMapItems, region.MapItems);
         
             region.GrowBush ();
@@ -42,36 +34,34 @@ namespace test
                 new MapItem (defs.MapItems ["bush"]){ Position = new Point<int> (3, 3) },
                 new MapItem (defs.MapItems ["bush"]){ Position = new Point<int> (0, 1) }
             };
-            //TraceRegion (region, defs);
             Assert.AreEqual (expectedGrowedMapItems, region.MapItems);
         }
 
-        void TraceRegion (RegionModel _region, GameDefs _defs)
+        [Test]
+        public void RegionCacheTest ()
         {
-            string[,] map = new string[_defs.RegionSize, _defs.RegionSize];
-            for (var row = 0; row < _defs.RegionSize; row++) {
-                for (var col = 0; col < _defs.RegionSize; col++)
-                    map [row, col] = "-";
-            }
-            foreach (var mapItem in _region.MapItems) {
-                var pos = mapItem.Position;
-                map [pos.X, pos.Y] = mapItem.Def.Name;
-            }
+            var binder = TestUtils.InitBinder (defsSource, persistentSource);
+            var regionCache = binder.GetInstance<RegionCache> ();
 
-            for (var i = 0; i < _defs.RegionSize; i++) {
-                var row = "";
-                for (var j = 0; j < _defs.RegionSize; j++) {
-                    row += map [j, i].Substring (0, 1) + "\t";
-                }
-                Console.WriteLine (row);
-            }
-            Console.WriteLine ();
+            regionCache.GetRegion (new Point<int> (0, 0));
+            Assert.True (regionCache.Contains (new Point<int> (0, 0)), "Does not contain Point {0, 0}");
+
+            Assert.False (regionCache.Contains (new Point<int> (1, 0)), "Cache conteins no requested region Point {1, 0}");
+         
+            regionCache.GetRegion (new Point<int> (1, 0));
+            Assert.True (regionCache.Contains (new Point<int> (1, 0)), "Does not contain Point {1, 0}");
+
+            regionCache.GetRegion (new Point<int> (2, 0));
+            Assert.True (regionCache.Contains (new Point<int> (2, 0)), "Does not contain Point {2, 0}");
+
+            Assert.False (regionCache.Contains (new Point<int> (0, 0)), "Cache not trimmed for size.");
         }
 
         const string defsSource = @"{
     ""region_size"": 4,
     ""items_per_region"": 2,
     ""gen_time"": 5000,
+    ""cache_size"": 2,
     ""range"": {
         ""tree"": 10,
         ""bush"": 30,
