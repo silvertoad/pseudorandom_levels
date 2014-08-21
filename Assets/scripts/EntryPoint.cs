@@ -11,4 +11,10 @@ public class EntryPoint : ContextView
         context = new AppContext (this, true);
         context.Start ();
     }
+
+    public enum Containers
+    {
+        GUI,
+        World
+    }
 }

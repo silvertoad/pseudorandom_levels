@@ -15,7 +15,7 @@ namespace mvscs.model
         {
             var jsonSource = JSON.Parse (_source);
 
-            Seed = (int)jsonSource ["seed"];
+            SetSeed ((int)jsonSource ["seed"]);
             PlayerPosition = new Point<int> ((string)jsonSource ["player_pos"]);
             ParseBushs ((Dictionary<string, object>)jsonSource ["bushs"]);
         }
@@ -23,6 +23,12 @@ namespace mvscs.model
         public void SetSeed (int _seed)
         {
             Seed = _seed;
+            BushPerRegion = new Dictionary<Point<int>, int> ();
+        }
+
+        public void SetPosition (Point<int> _playerPos)
+        {
+            PlayerPosition = _playerPos;
         }
 
         public int GetNumBushs (Point<int> _regionPos)
@@ -34,13 +40,11 @@ namespace mvscs.model
 
         void ParseBushs (Dictionary<string, object> _bushsSource)
         {
-            var regionBushs = new Dictionary<Point<int>, int> ();
             foreach (var kvp in _bushsSource) {
                 var point = new Point<int> (kvp.Key);
                 var count = Convert.ToInt32 (kvp.Value);
-                regionBushs.Add (point, count);
+                BushPerRegion.Add (point, count);
             }
-            BushPerRegion = regionBushs;
         }
     }
 }

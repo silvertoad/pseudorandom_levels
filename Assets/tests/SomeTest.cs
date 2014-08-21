@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace test
 {
@@ -8,7 +9,6 @@ namespace test
         [TestCase]
         public void Common ()
         {
-
         }
     }
 }

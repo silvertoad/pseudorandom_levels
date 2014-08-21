@@ -3,18 +3,19 @@
         "size": 12,
         "num_items": 50,
         "gen_time": 5000,
+        "cache_size": 20,
         "cell_size": 30
     },
 	"range": {
 		"tree": 10,
 		"bush": 30,
 		"puddle": 10,
-		"rock": 50,
+		"rock": 50
 	},
 	"map_items":{
-		"tree": "tree.prefab",
-		"bush": "bush.prefab",
-		"puddle": "puddle.prefab",
-		"rock": "rock.prefab"
+		"tree": "tree",
+		"bush": "bush",
+		"puddle": "puddle",
+		"rock": "rock"
 	}
 }
