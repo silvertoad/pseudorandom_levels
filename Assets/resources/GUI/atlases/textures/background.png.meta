@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: 3fdd2cc3d50c84716bb034a3aa9b3b65
+guid: db9943080ab8b49d6a577b64b555ecff
 TextureImporter:
   fileIDToRecycleName:
-    21300000: bush
+    21300000: bg
+    21300002: background
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -18,11 +19,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 5
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
@@ -35,11 +36,11 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 6
+  alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   textureType: 8
   buildTargetSettings: []
   spriteSheet:

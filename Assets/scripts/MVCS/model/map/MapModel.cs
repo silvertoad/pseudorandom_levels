@@ -11,6 +11,8 @@ namespace mvscs.model
         [Inject]
         public PersistentModel persistent { get; set; }
 
+        public bool IsInGame { get; private set; }
+
         public void UpdatePos ()
         {
         }

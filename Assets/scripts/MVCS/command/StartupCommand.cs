@@ -15,17 +15,17 @@ namespace command
         public PersistentModel persistent { get; set; }
 
         [Inject]
-        public StartGameSignal startGame { get; set; }
+        public RegionGenerator generator { get; set; }
 
         [Inject]
-        public RegionGenerator generator { get; set; }
+        public ShowMenuSignal showMenu { get; set; }
 
         public override void Execute ()
         {
             ReadDefs ();
             InitPresistent ();
 
-            startGame.Dispatch ();
+            showMenu.Dispatch ();
         }
 
         void ReadDefs ()
@@ -36,11 +36,11 @@ namespace command
 
         void InitPresistent ()
         {
-            var hasSave = false;
+            /*  var hasSave = false;
             if (hasSave)
                 LoadGame ();
             else
-                StartNewGame ();
+                StartNewGame ();*/
         }
 
         void LoadGame ()

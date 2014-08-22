@@ -6,6 +6,8 @@ using mvscs.model;
 using command;
 using appsignal;
 using mediator;
+using view.gui;
+using mediator.gui;
 
 public class AppContext : MVCSContext
 {
@@ -42,19 +44,24 @@ public class AppContext : MVCSContext
     void mapMediators ()
     {
         mediationBinder.Bind<MapView> ().To<MapMediator> ();
-//        mediationBinder.Bind<DialogLoadingView> ().To<DialogLoadingMediator> ();
-//        mediationBinder.Bind<DialogInfoView> ().To<DialogInfoMediator> ();
+        mediationBinder.Bind<MainMenuView> ().To<MainMenuMediator> ();
+        mediationBinder.Bind<MainScreenView> ().To<MainScreenMediator> ();
     }
 
     void mapCommands ()
     {
         commandBinder.Bind <StartupSignal> ().To<StartupCommand> ();
-        commandBinder.Bind <StartGameSignal> ().To<StartGameCommand> ();
-//        commandBinder.Bind <appsignals.InitCompleteSignal> ().To<StartGameCommand> ();
-//      
-//        // global signals
-//        injectionBinder.Bind<appsignals.StartInitSignal> ().To<appsignals.StartInitSignal> ().ToSingleton ();
-//        injectionBinder.Bind<appsignals.StartupBunleLoadingSignal> ().To<appsignals.StartupBunleLoadingSignal> ().ToSingleton ();
+        commandBinder.Bind <ShowMenuSignal> ().To<ShowMenuCommand> ();
+
+        commandBinder.Bind <StartNewGameSignal> ().InSequence ()
+            .To<StartNewGameCommand> ()
+            .To<InitMapCommand> ();
+
+        commandBinder.Bind <LoadGameSignal> ().InSequence ()
+            .To<LoadGameCommand> ()
+            .To<InitMapCommand> ();
+
+        commandBinder.Bind <SaveGameSignal> ().To<SaveGameCommand> ();
     }
 
     void mapModels ()
@@ -63,7 +70,6 @@ public class AppContext : MVCSContext
         injectionBinder.Bind<RegionCache> ().To<RegionCache> ().ToSingleton ();
         injectionBinder.Bind<PersistentModel> ().To<PersistentModel> ().ToSingleton ();
         injectionBinder.Bind<MapModel> ().To<MapModel> ().ToSingleton ();
-//        injectionBinder.Bind<TaskQueue> ().To (new TaskQueue ()).ToName ("INIT_QUEUE");
     }
 
     void mapOthers ()
@@ -71,17 +77,5 @@ public class AppContext : MVCSContext
         injectionBinder.Bind<RegionGenerator> ().To<RegionGenerator> ().ToSingleton ();
         injectionBinder.Bind<GameObject> ().To (entryPoint.GUI).ToName (EntryPoint.Containers.GUI);
         injectionBinder.Bind<GameObject> ().To (entryPoint.World).ToName (EntryPoint.Containers.World);
-
-//        injectionBinder.Bind<IConfig> ().To (config);
-//    
-//        if (config.AssetPolicy == core.Config.AssetPolicies.CDN)
-//            injectionBinder.Bind<IResourceLoader> ().To<core.resources.cdn.ResourceLoader> ().ToSingleton ();
-//        else
-//            injectionBinder.Bind<IResourceLoader> ().To<core.resources.local.ResourceLoader> ().ToSingleton ();
-//
-//        injectionBinder.Bind<ResourceManager> ().To<ResourceManager> ().ToSingleton ();
-//        injectionBinder.Bind<VersionProcessor> ().To<VersionProcessor> ().ToSingleton ();
-//        injectionBinder.Bind<ResourceStorage> ().To<ResourceStorage> ().ToSingleton ();
-//        injectionBinder.Bind<ResourcesManifest> ().To<ResourcesManifest> ().ToSingleton ();
     }
 }

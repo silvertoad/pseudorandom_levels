@@ -46,5 +46,13 @@ namespace mvscs.model
                 BushPerRegion.Add (point, count);
             }
         }
+
+        public bool HasSave {
+            get {
+                return false;
+            }
+            private set {
+            }
+        }
     }
 }

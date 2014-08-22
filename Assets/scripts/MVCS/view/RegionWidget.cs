@@ -13,6 +13,5 @@ public class RegionWidget : MonoBehaviour
         var cellMultiplier = _cellSize / 100f;
         var pos = new Vector3 (_item.Position.X * cellMultiplier, _item.Position.Y * cellMultiplier);
         item.transform.position = pos;
-        Debug.Log ("Draw item: " + _item);
     }
 }

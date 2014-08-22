@@ -1,6 +1,6 @@
 {
 	"region": {
-        "size": 12,
+        "size": 17,
         "num_items": 50,
         "gen_time": 5000,
         "cache_size": 20,
