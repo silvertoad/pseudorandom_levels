@@ -18,6 +18,7 @@ namespace mediator
         {
             var regions = model.GetPointsArownd (persistent.PlayerPosition);
             view.DrawRegions (regions);
+            view.InitPlayer (persistent.PlayerPosition);
         }
     }
 }

@@ -16,6 +16,14 @@ public class MapView : View
         DrawRegion (_regions [0]);
     }
 
+    public void InitPlayer (Point<int> _playerPos)
+    {
+        var player = GameUtils.InstantiateAt ("world/tank/tank", gameObject);
+        var realCellSize = defs.CellSize / 100;
+        var realPos = new Vector3 (_playerPos.X * realCellSize + realCellSize / 2, _playerPos.Y * realCellSize + realCellSize / 2);
+        player.transform.position = realPos;
+    }
+
     void DrawRegion (RegionModel _region)
     {
         var regionView = GetRegion ();
@@ -29,6 +37,8 @@ public class MapView : View
     RegionWidget GetRegion ()
     {
         var instance = GameUtils.InstantiateAt ("world/region", gameObject);
-        return instance.GetComponent<RegionWidget> ();
+        var regionWidget = instance.GetComponent<RegionWidget> ();
+        regionWidget.Init (defs.CellSize, defs.RegionSize);
+        return regionWidget;
     }
 }

@@ -42,8 +42,7 @@ public class DummyTimer : MonoBehaviour
 
     public static DummyTimer Create ()
     {
-        var go = new GameObject ("DummyTimer");
-        return Create (go);
+        return GameUtils.AddToPath<DummyTimer> ("system.timers");
     }
 
     public static DummyTimer Create (GameObject _parent)

@@ -2,9 +2,24 @@
 using UnityEngine;
 using mvscs.model;
 
+[RequireComponent (typeof(BoxCollider))]
 public class RegionWidget : MonoBehaviour
 {
     const string ItemsPath = "world/items/{0}/{0}";
+
+    BoxCollider Collider;
+
+    void Awake ()
+    {
+        Collider = gameObject.GetComponent<BoxCollider> ();
+    }
+
+    public void Init (int _cellSize, int _regionSize)
+    {
+        var colliderSize = _cellSize / 100f * _regionSize;
+        Collider.size = new Vector3 (colliderSize, colliderSize);
+        Collider.center = new Vector3 (colliderSize / 2, colliderSize / 2);
+    }
 
     public void Draw (MapItem _item, int _cellSize)
     {

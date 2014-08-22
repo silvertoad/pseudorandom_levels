@@ -20,6 +20,10 @@ namespace command
         {
             AddMainScreen ();
 
+            var oldMap = worldContainer.transform.Find ("map");
+            if (oldMap != null)
+                Object.Destroy (oldMap.gameObject);
+
             GameUtils.InstantiateAt ("world/map", worldContainer);
             Debug.Log ("start game");
         }

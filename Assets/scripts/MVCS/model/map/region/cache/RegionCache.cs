@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using appsignal;
 
 namespace mvscs.model
 {
@@ -10,12 +11,17 @@ namespace mvscs.model
         [Inject]
         public GameDefs GameDefs { get; set; }
 
+        [Inject] public StartNewGameSignal onStartNewGame  { set; get; }
+
+        [Inject] public LoadGameSignal onLoadGame  { set; get; }
+
         RegionQueue cache;
 
         [PostConstruct]
         public void Cnonstruct ()
         {
-            cache = new RegionQueue (GameDefs.CacheSize);
+            onStartNewGame.AddListener (Flush);
+            onLoadGame.AddListener (Flush);
         }
 
         public RegionModel GetRegion (Point<int> _regionPos)
@@ -29,10 +35,15 @@ namespace mvscs.model
             return region;
         }
 
-        public bool Contains(Point<int> _regionPos)
+        public bool Contains (Point<int> _regionPos)
         {
             RegionModel region;
             return cache.TryGetValue (_regionPos, out region);
+        }
+
+        void Flush ()
+        {
+            cache = new RegionQueue (GameDefs.CacheSize);
         }
     }
 
