@@ -51,6 +51,17 @@ public class Point<TType> where TType : IConvertible
         );
     }
 
+    public static Point<TType> operator - (Point<TType> _lhs, Point<TType> _rhs)
+    {
+        var x = Convert.ToDouble (_lhs.X) - Convert.ToDouble (_rhs.X);
+        var y = Convert.ToDouble (_lhs.Y) - Convert.ToDouble (_rhs.Y);
+
+        return new Point<TType> (
+            (TType)Convert.ChangeType (x, typeof(TType)),
+            (TType)Convert.ChangeType (y, typeof(TType))
+        );
+    }
+
     public static bool operator== (Point<TType> _lhs, Point<TType> _rhs)
     {
         return _lhs.Equals (_rhs);

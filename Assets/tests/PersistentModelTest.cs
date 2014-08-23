@@ -14,6 +14,7 @@ namespace test
 
             Assert.AreEqual (1453, persisitent.Seed);
             Assert.AreEqual (new Point<int> (-1, 0), persisitent.PlayerPosition);
+            Assert.AreEqual (new Point<int> (0, 0), persisitent.CurrentRegion);
 
             Assert.AreEqual (2, persisitent.GetNumBushs (new Point<int> (0, 0)));
         }
@@ -29,6 +30,7 @@ namespace test
         const string persistentSource = @"{
     ""seed"": 1453,
     ""player_pos"": ""-1;0"",
+    ""current_region"": ""0;0"",
     ""bushs"": {
         ""0;0"": 2
     }
@@ -36,6 +38,7 @@ namespace test
         const string invalidSource = @"{
     ""seed"": 1453,
     ""player_pos"": ""-1;1f0"",
+    ""current_region"": ""0;0"",
     ""bushs"": {}
 }";
     }

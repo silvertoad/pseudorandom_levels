@@ -16,9 +16,15 @@ namespace mediator
 
         public override void OnRegister ()
         {
+            view.SetDefaultRegion (persistent.CurrentRegion);
+            OnCurrentRegionChange ();
+        }
+
+        public void OnCurrentRegionChange ()
+        {
             var regions = model.GetPointsArownd (persistent.PlayerPosition);
-            view.DrawRegions (regions);
             view.InitPlayer (persistent.PlayerPosition);
+            view.DrawRegions (regions, persistent.CurrentRegion);
         }
     }
 }

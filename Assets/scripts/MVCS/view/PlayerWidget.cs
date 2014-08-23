@@ -10,11 +10,13 @@ public class PlayerWidget : MonoBehaviour
     delegate void KeyHandler (float _axis);
 
     List<KeyValuePair<KeyCode, KeyHandler>> keyMap = new List<KeyValuePair<KeyCode, KeyHandler>> ();
-    Camera camera;
+    Camera gameCamera;
+    Animator animation;
 
     void Awake ()
     {
-        camera = GameObject.Find ("WorldCamera").GetComponent<Camera> ();
+        animation = gameObject.GetComponent<Animator> ();
+        gameCamera = GameObject.Find ("WorldCamera").GetComponent<Camera> ();
 
         MapKey (MoveForward, KeyCode.W);
         MapKey (MoveBackward, KeyCode.S);
@@ -25,15 +27,18 @@ public class PlayerWidget : MonoBehaviour
     void Update ()
     {
         Vector3 pos = transform.position;
-        pos.z = camera.transform.position.z;
-        camera.transform.position = pos;
+        pos.z = gameCamera.transform.position.z;
+        gameCamera.transform.position = pos;
     }
 
     void FixedUpdate ()
     {
+        animation.SetBool ("running", false);
         foreach (var kvp in keyMap) {
-            if (Input.GetKey (kvp.Key))
+            if (Input.GetKey (kvp.Key)) {
                 kvp.Value (Input.GetAxis ("Horizontal"));
+                animation.SetBool ("running", true);
+            }
         }
     }
 

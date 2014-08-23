@@ -82,6 +82,7 @@ namespace test
         const string persistentSource = @"{
     ""seed"": 1453,
     ""player_pos"": ""0;0"",
+    ""current_region"": ""0;0"",
     ""bushs"": {
         ""0;0"": 2
     }

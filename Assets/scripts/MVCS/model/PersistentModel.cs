@@ -9,6 +9,8 @@ namespace mvscs.model
 
         public Point<int> PlayerPosition { get; private set; }
 
+        public Point<int> CurrentRegion { get; private set; }
+
         Dictionary<Point<int>, int> BushPerRegion;
 
         public void Init (string _source)
@@ -17,6 +19,7 @@ namespace mvscs.model
 
             SetSeed ((int)jsonSource ["seed"]);
             PlayerPosition = new Point<int> ((string)jsonSource ["player_pos"]);
+            CurrentRegion = new Point<int> ((string)jsonSource ["current_region"]);
             ParseBushs ((Dictionary<string, object>)jsonSource ["bushs"]);
         }
 
@@ -24,6 +27,8 @@ namespace mvscs.model
         {
             Seed = _seed;
             BushPerRegion = new Dictionary<Point<int>, int> ();
+            PlayerPosition = new Point<int> (0, 0);
+            CurrentRegion = new Point<int> (0, 0);
         }
 
         public void SetPosition (Point<int> _playerPos)
