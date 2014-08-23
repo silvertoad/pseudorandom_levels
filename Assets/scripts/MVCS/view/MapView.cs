@@ -36,7 +36,7 @@ public class MapView : View
 
     RegionWidget GetRegion ()
     {
-        var instance = GameUtils.InstantiateAt ("world/region", gameObject);
+        var instance = GameUtils.InstantiateAt ("world/region/region", gameObject);
         var regionWidget = instance.GetComponent<RegionWidget> ();
         regionWidget.Init (defs.CellSize, defs.RegionSize);
         return regionWidget;

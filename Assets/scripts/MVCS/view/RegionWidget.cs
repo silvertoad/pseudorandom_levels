@@ -6,7 +6,7 @@ using mvscs.model;
 public class RegionWidget : MonoBehaviour
 {
     const string ItemsPath = "world/items/{0}/{0}";
-
+    [SerializeField] MeshRenderer background;
     BoxCollider Collider;
 
     void Awake ()
@@ -19,6 +19,11 @@ public class RegionWidget : MonoBehaviour
         var colliderSize = _cellSize / 100f * _regionSize;
         Collider.size = new Vector3 (colliderSize, colliderSize);
         Collider.center = new Vector3 (colliderSize / 2, colliderSize / 2);
+
+        var bg = background.gameObject.transform;
+        bg.localScale = Collider.size;
+        bg.position = new Vector3 (colliderSize / 2, colliderSize / 2) + new Vector3 (0, 0, 1);
+        background.material.mainTextureScale = new Vector2 (_regionSize, _regionSize);
     }
 
     public void Draw (MapItem _item, int _cellSize)

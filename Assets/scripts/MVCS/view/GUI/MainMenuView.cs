@@ -13,7 +13,6 @@ namespace view.gui
         public void SetButtonActive (UIButton _button, bool _isEnabled)
         {
             _button.isEnabled = _isEnabled;
-            DummyTimer.Create ();
         }
     }
 }
