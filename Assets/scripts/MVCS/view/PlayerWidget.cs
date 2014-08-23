@@ -11,11 +11,11 @@ public class PlayerWidget : MonoBehaviour
 
     List<KeyValuePair<KeyCode, KeyHandler>> keyMap = new List<KeyValuePair<KeyCode, KeyHandler>> ();
     Camera gameCamera;
-    Animator animation;
+    Animator anim;
 
     void Awake ()
     {
-        animation = gameObject.GetComponent<Animator> ();
+        anim = gameObject.GetComponent<Animator> ();
         gameCamera = GameObject.Find ("WorldCamera").GetComponent<Camera> ();
 
         MapKey (MoveForward, KeyCode.W);
@@ -33,11 +33,11 @@ public class PlayerWidget : MonoBehaviour
 
     void FixedUpdate ()
     {
-        animation.SetBool ("running", false);
+        anim.SetBool ("running", false);
         foreach (var kvp in keyMap) {
             if (Input.GetKey (kvp.Key)) {
                 kvp.Value (Input.GetAxis ("Horizontal"));
-                animation.SetBool ("running", true);
+                anim.SetBool ("running", true);
             }
         }
     }

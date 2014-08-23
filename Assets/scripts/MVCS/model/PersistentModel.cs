@@ -36,6 +36,11 @@ namespace mvscs.model
             PlayerPosition = _playerPos;
         }
 
+        public void SetCurrentRegion (Point<int> _playerPos)
+        {
+            CurrentRegion = _playerPos;
+        }
+
         public int GetNumBushs (Point<int> _regionPos)
         {
             if (BushPerRegion.ContainsKey (_regionPos))

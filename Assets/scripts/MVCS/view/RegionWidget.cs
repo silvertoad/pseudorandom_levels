@@ -2,36 +2,40 @@
 using UnityEngine;
 using mvscs.model;
 
-[RequireComponent (typeof(BoxCollider))]
 public class RegionWidget : MonoBehaviour
 {
     const string ItemsPath = "world/items/{0}/{0}";
     [SerializeField] MeshRenderer background;
-    BoxCollider Collider;
 
-    void Awake ()
-    {
-        Collider = gameObject.GetComponent<BoxCollider> ();
-    }
+    public RegionModel Region { get; private set; }
+
+    int cellSize;
 
     public void Init (int _cellSize, int _regionSize)
     {
+        cellSize = _cellSize;
         var colliderSize = _cellSize / 100f * _regionSize;
-        Collider.size = new Vector3 (colliderSize, colliderSize);
-        Collider.center = new Vector3 (colliderSize / 2, colliderSize / 2);
 
         var bg = background.gameObject.transform;
-        bg.localScale = Collider.size;
-        bg.position = new Vector3 (colliderSize / 2, colliderSize / 2) + new Vector3 (0, 0, 1);
+        bg.localScale = new Vector3 (colliderSize, colliderSize);
+        bg.position = new Vector3 (colliderSize / 2, colliderSize / 2, 1);
         background.material.mainTextureScale = new Vector2 (_regionSize, _regionSize);
     }
 
-    public void Draw (MapItem _item, int _cellSize)
+    public void Draw (MapItem _item)
     {
         var itemId = string.Format (ItemsPath, _item.Def.Name);
         var item = GameUtils.InstantiateAt (itemId, gameObject);
-        var cellMultiplier = _cellSize / 100f;
+        var cellMultiplier = cellSize / 100f;
         var pos = new Vector3 (_item.Position.X * cellMultiplier, _item.Position.Y * cellMultiplier);
         item.transform.position = pos;
+    }
+
+    public void SetRegion (RegionModel _region)
+    {
+        Region = _region;
+        foreach (var item in _region.MapItems) {
+            Draw (item);
+        }
     }
 }
