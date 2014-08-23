@@ -13,9 +13,9 @@ public class AppContext : MVCSContext
 {
     readonly EntryPoint entryPoint;
 
-    public AppContext (EntryPoint view, bool autoStartup) : base (view, autoStartup)
+    public AppContext (EntryPoint _view, bool _autoStartup) : base (_view, _autoStartup)
     {
-        entryPoint = view;
+        entryPoint = _view;
     }
 
     protected override void addCoreComponents ()
@@ -62,6 +62,9 @@ public class AppContext : MVCSContext
             .To<InitMapCommand> ();
 
         commandBinder.Bind <SaveGameSignal> ().To<SaveGameCommand> ();
+
+        // Signals
+        injectionBinder.Bind <PersistentModel.SeedChanged> ().To<PersistentModel.SeedChanged> ().ToSingleton ();
     }
 
     void mapModels ()

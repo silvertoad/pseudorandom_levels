@@ -24,6 +24,8 @@ namespace command
             if (oldMap != null)
                 Object.Destroy (oldMap.gameObject);
 
+            persistent.IsPlaying = true;
+
             GameUtils.InstantiateAt ("world/map", worldContainer);
             Debug.Log ("start game");
         }

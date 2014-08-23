@@ -40,23 +40,8 @@ namespace mediator.gui
         void SetButtonsEnabled ()
         {
             view.SetButtonActive (view.loadBtn, persistent.HasSave);
-            view.SetButtonActive (view.saveBtn, map.IsInGame);
-            view.SetButtonActive (view.continueBtn, map.IsInGame);
-        }
-
-        void StartHandler ()
-        {
-            Debug.Log ("StartHandler");
-        }
-
-        void LoadHandler ()
-        {
-            Debug.Log ("LoadHandler");
-        }
-
-        void SaveHandler ()
-        {
-            Debug.Log ("SaveHandler");
+            view.SetButtonActive (view.saveBtn, persistent.IsPlaying);
+            view.SetButtonActive (view.continueBtn, persistent.IsPlaying);
         }
 
         void Close ()

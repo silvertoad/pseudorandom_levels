@@ -13,6 +13,7 @@ namespace test.utils
             binder.Bind<RegionGenerator> ().To<RegionGenerator> ().ToSingleton ();
             binder.Bind<RegionCache> ().To<RegionCache> ().ToSingleton ();
             binder.Bind<PersistentModel> ().To<PersistentModel> ().ToSingleton ();
+            binder.Bind <PersistentModel.SeedChanged> ().To<PersistentModel.SeedChanged> ().ToSingleton ();
 
             var defs = binder.GetInstance<GameDefs> ();
             defs.Init (_defs);

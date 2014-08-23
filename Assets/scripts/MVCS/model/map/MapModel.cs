@@ -11,12 +11,6 @@ namespace mvscs.model
         [Inject]
         public PersistentModel persistent { get; set; }
 
-        public bool IsInGame { get; private set; }
-
-        public void UpdatePos ()
-        {
-        }
-
         Point<int>[] arrowndDeltas = {
             new Point<int> (0, 0),
             new Point<int> (1, 0),

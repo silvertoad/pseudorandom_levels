@@ -17,7 +17,6 @@ namespace command
             var rand = new System.Random ().Next (900000);
             persistent.SetSeed (rand);
             persistent.SetPosition (new Point<int> (0, 0));
-            generator.UpdateSeed ();
         }
     }
 }

@@ -3,6 +3,7 @@ using strange.extensions.command.impl;
 using mvscs.model;
 using UnityEngine;
 using appsignal;
+using System.IO;
 
 namespace command
 {
@@ -36,24 +37,8 @@ namespace command
 
         void InitPresistent ()
         {
-            /*  var hasSave = false;
-            if (hasSave)
-                LoadGame ();
-            else
-                StartNewGame ();*/
-        }
-
-        void LoadGame ()
-        {
-            throw new NotImplementedException ();
-        }
-
-        // TODO: move to separate command
-        void StartNewGame ()
-        {
-            persistent.SetSeed (new System.Random ().Next (900000));
-            persistent.SetPosition (new Point<int> (0, 0));
-            generator.UpdateSeed ();
+            Debug.Log (PersistentModel.SAVE_PATH);
+            persistent.HasSave = File.Exists (Application.persistentDataPath + "/save.dat");
         }
     }
 }

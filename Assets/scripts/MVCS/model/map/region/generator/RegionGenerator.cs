@@ -8,19 +8,27 @@ namespace mvscs.model
         public GameDefs Defs { get; set; }
 
         [Inject]
-        public PersistentModel Game { get; set; }
+        public PersistentModel persistent { get; set; }
+
+        [Inject] public PersistentModel.SeedChanged onSeedChanged  { set; get; }
 
         RegionHashCalculator RegionHash;
 
+        [PostConstruct]
+        public void Construct ()
+        {
+            onSeedChanged.AddListener (UpdateSeed);
+        }
+
         public void UpdateSeed ()
         {
-            RegionHash = new RegionHashCalculator (Game.Seed);
+            RegionHash = new RegionHashCalculator (persistent.Seed);
         }
 
         public RegionModel GetRegionModel (Point<int> _regionPos)
         {
             var random = CreateRandom (_regionPos);
-            var numBushs = Game.GetNumBushs (_regionPos);
+            var numBushs = persistent.GetNumBushs (_regionPos);
 
             var region = new RegionModel (_regionPos, random, Defs);
             for (var i = 0; i < numBushs; i++)

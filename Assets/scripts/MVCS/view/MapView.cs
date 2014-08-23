@@ -16,7 +16,6 @@ public class MapView : View
     public GameObject player;
 
     public Point<int> currentPosition;
-    public Point<int> defaultPosition;
     List<RegionWidget> currentRegions = new List<RegionWidget> ();
 
     public Signal<Point<int>> onPositionChange = new Signal<Point<int>> ();
@@ -29,14 +28,11 @@ public class MapView : View
         }
     }
 
-
     Point<int> GetPlayerPosition ()
     {
         var regionRealSize = defs.CellSize * defs.RegionSize / 100f;
-        var defaultX = defaultPosition.X * regionRealSize;
-        var defaulty = defaultPosition.Y * regionRealSize;
-        var x = (player.transform.position.x + defaultX) / regionRealSize;
-        var y = (player.transform.position.y + defaulty) / regionRealSize;
+        var x = (player.transform.position.x) / regionRealSize;
+        var y = (player.transform.position.y) / regionRealSize;
         x += x < 0 ? -1 : 0;
         y += y < 0 ? -1 : 0;
         return new Point<int> ((int)x, (int)y);
@@ -44,7 +40,6 @@ public class MapView : View
 
     public void SetDefaultRegion (Point<int> _defaultPosition)
     {
-        defaultPosition = _defaultPosition;
         currentPosition = _defaultPosition;
     }
 
@@ -91,9 +86,15 @@ public class MapView : View
     public void InitPlayer (Point<int> _playerPos)
     {
         player = GameUtils.InstantiateAt ("world/tank/tank", gameObject);
-        var realCellSize = defs.CellSize / 100;
-        var realPos = new Vector3 (_playerPos.X * realCellSize + realCellSize / 2, _playerPos.Y * realCellSize + realCellSize / 2);
-        player.transform.position = realPos;
+        var realCellSize = defs.CellSize / 100f;
+
+        var xPosOnRegion = _playerPos.X * realCellSize + realCellSize / 2;
+        var yPosOnRegion = _playerPos.Y * realCellSize + realCellSize / 2;
+
+        var x = xPosOnRegion + currentPosition.X * defs.RegionSize * realCellSize;
+        var y = yPosOnRegion + currentPosition.Y * defs.RegionSize * realCellSize;
+
+        player.transform.position = new Vector3 (x, y);
     }
 
     void DrawRegion (RegionModel _region)
@@ -102,8 +103,7 @@ public class MapView : View
         regionView.SetRegion (_region);
 
         var regionRealSize = defs.CellSize * defs.RegionSize / 100f;
-        var delta = defaultPosition /*+ currentPosition*/ + _region.Position;
-        var pos = new Vector3 (delta.X * regionRealSize, delta.Y * regionRealSize);
+        var pos = new Vector3 (_region.Position.X * regionRealSize, _region.Position.Y * regionRealSize);
         regionView.gameObject.transform.position = pos;
         currentRegions.Add (regionView);
     }
