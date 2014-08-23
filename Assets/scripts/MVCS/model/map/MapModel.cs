@@ -32,5 +32,14 @@ namespace mvscs.model
             }
             return regions.ToArray ();
         }
+
+        public bool GrowBush (out RegionModel _region)
+        {
+            var region = regionsCache.GetRegion (persistent.CurrentRegion);
+            bool success = region.GrowBush ();
+            persistent.GrowBush (region.Position);
+            _region = region;
+            return success;
+        }
     }
 }

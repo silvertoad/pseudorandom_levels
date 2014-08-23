@@ -24,7 +24,6 @@ namespace mvscs.model
             FillRegion ();
         }
 
-        // TODO: подумать где сохранять количество кустов и нужно ли открывать метод GrowBush
         public bool GrowBush ()
         {
             if (availableCells.Count == 0)

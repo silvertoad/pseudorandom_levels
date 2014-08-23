@@ -108,6 +108,13 @@ public class MapView : View
         currentRegions.Add (regionView);
     }
 
+    public void UpdateRegion (RegionModel _region)
+    {
+        foreach (var regionView in currentRegions)
+            if (regionView.Region.Position == _region.Position)
+                regionView.Draw (_region.MapItems.Last ());
+    }
+
     RegionWidget GetRegion ()
     {
         var instance = GameUtils.InstantiateAt ("world/region/region", gameObject);

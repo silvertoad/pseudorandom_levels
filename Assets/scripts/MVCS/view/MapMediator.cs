@@ -15,6 +15,8 @@ namespace mediator
         [Inject]
         public PersistentModel persistent { get; set; }
 
+        [Inject] public GameDefs defs  { set; get; }
+
         public override void OnRegister ()
         {
             view.SetDefaultRegion (persistent.CurrentRegion);
@@ -22,6 +24,15 @@ namespace mediator
           
             view.onPositionChange.AddListener (PositionChangeHandler);
             OnCurrentRegionChange ();
+
+            // TODO: перенести в отдельную модель
+            var timer = DummyTimer.Create (gameObject);
+            timer.OnComplete += () => {
+                RegionModel region;
+                if (model.GrowBush (out region))
+                    view.UpdateRegion (region);
+            };
+            timer.StartTimer (defs.GenTime);
         }
 
         public override void OnRemove ()
