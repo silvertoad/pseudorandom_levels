@@ -21,7 +21,7 @@ namespace mediator.gui
 
         [Inject] public StartNewGameSignal startSignal  { set; get; }
 
-        List<KeyValuePair<UIButton, EventDelegate.Callback>> mapedEvents = new List<KeyValuePair<UIButton, EventDelegate.Callback>> ();
+        List<KeyValuePair<UIButton, UIButtonColor.ClickHandler>> mapedEvents = new List<KeyValuePair<UIButton, UIButtonColor.ClickHandler>> ();
 
         public override void OnRegister ()
         {
@@ -50,18 +50,18 @@ namespace mediator.gui
             Destroy (view.gameObject);
         }
 
-        public void MapClick (UIButton _button, params EventDelegate.Callback[] _callbacks)
+        public void MapClick (UIButton _button, params UIButtonColor.ClickHandler[] _callbacks)
         {
             foreach (var _callback in _callbacks) {
-                EventDelegate.Add (_button.onClick, _callback);
-                mapedEvents.Add (new KeyValuePair<UIButton, EventDelegate.Callback> (_button, _callback));
+                _button.onClick += _callback;
+                mapedEvents.Add (new KeyValuePair<UIButton, UIButtonColor.ClickHandler> (_button, _callback));
             }
         }
 
         public override void OnRemove ()
         {
             foreach (var kvp in mapedEvents)
-                EventDelegate.Remove (kvp.Key.onClick, kvp.Value);
+                kvp.Key.RemoveClickHandlers();
             mapedEvents = null;
         }
     }

@@ -12,12 +12,12 @@ namespace mediator
 
         public override void OnRegister ()
         {
-            EventDelegate.Add (view.settingsBtn.onClick, showMenu.Dispatch);
+            view.settingsBtn.onClick += showMenu.Dispatch;
         }
 
         public override void OnRemove ()
         {
-            EventDelegate.Remove (view.settingsBtn.onClick, showMenu.Dispatch);
+            view.settingsBtn.RemoveClickHandlers();
         }
     }
 }
