@@ -22,6 +22,8 @@ namespace mvscs.model
 
         [Inject] public PersistentModel.SeedChanged seedChanged  { set; get; }
 
+        [Inject] public GameDefs defs  { set; get; }
+
         public void Init (string _source)
         {
             var jsonSource = JSON.Parse (_source);
@@ -36,7 +38,7 @@ namespace mvscs.model
         {
             Seed = _seed;
             BushPerRegion = new Dictionary<Point<int>, int> ();
-            PlayerPosition = new Point<int> (0, 0);
+            PlayerPosition = new Point<int> (defs.RegionSize / 2, defs.RegionSize / 2);
             CurrentRegion = new Point<int> (0, 0);
             seedChanged.Dispatch ();
         }

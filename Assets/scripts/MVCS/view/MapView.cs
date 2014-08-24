@@ -99,7 +99,7 @@ public class MapView : View
 
     void DrawRegion (RegionModel _region)
     {
-        var regionView = GetRegion ();
+        var regionView = GetRegion (_region.Position);
         regionView.SetRegion (_region);
 
         var regionRealSize = defs.CellSize * defs.RegionSize / 100f;
@@ -115,9 +115,10 @@ public class MapView : View
                 regionView.Draw (_region.MapItems.Last ());
     }
 
-    RegionWidget GetRegion ()
+    RegionWidget GetRegion (Point<int> _point)
     {
         var instance = GameUtils.InstantiateAt ("world/region/region", gameObject);
+        instance.name = string.Format ("region_{0}:{1}", _point.X, _point.Y);
         var regionWidget = instance.GetComponent<RegionWidget> ();
         regionWidget.Init (defs.CellSize, defs.RegionSize);
         return regionWidget;

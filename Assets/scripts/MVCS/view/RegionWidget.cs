@@ -4,8 +4,9 @@ using mvscs.model;
 
 public class RegionWidget : MonoBehaviour
 {
-    const string ItemsPath = "world/items/{0}/{0}";
     [SerializeField] MeshRenderer background;
+
+    const string ItemsPath = "world/items/{0}/{0}";
 
     public RegionModel Region { get; private set; }
 
@@ -28,7 +29,7 @@ public class RegionWidget : MonoBehaviour
         var item = GameUtils.InstantiateAt (itemId, gameObject);
         var cellMultiplier = cellSize / 100f;
         var pos = new Vector3 (_item.Position.X * cellMultiplier, _item.Position.Y * cellMultiplier);
-        item.transform.position = pos;
+        item.transform.localPosition = pos;
     }
 
     public void SetRegion (RegionModel _region)

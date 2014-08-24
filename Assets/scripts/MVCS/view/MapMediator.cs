@@ -29,8 +29,10 @@ namespace mediator
             var timer = DummyTimer.Create (gameObject);
             timer.OnComplete += () => {
                 RegionModel region;
-                if (model.GrowBush (out region))
+                if (model.GrowBush (out region)) {
                     view.UpdateRegion (region);
+                    Debug.Log ("grow bush at: " + region.Position);
+                }
             };
             timer.StartTimer (defs.GenTime);
         }
