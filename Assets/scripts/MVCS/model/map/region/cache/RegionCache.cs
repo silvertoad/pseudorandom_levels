@@ -26,6 +26,8 @@ namespace mvscs.model
 
         public RegionModel GetRegion (Point<int> _regionPos)
         {
+            if (cache == null)
+                Flush ();
             RegionModel region;
             if (cache.TryGetValue (_regionPos, out region))
                 return region;

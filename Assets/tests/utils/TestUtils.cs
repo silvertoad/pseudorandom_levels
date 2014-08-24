@@ -1,6 +1,7 @@
 ﻿using System;
 using strange.extensions.injector.impl;
 using mvscs.model;
+using appsignal;
 
 namespace test.utils
 {
@@ -14,6 +15,8 @@ namespace test.utils
             binder.Bind<RegionCache> ().To<RegionCache> ().ToSingleton ();
             binder.Bind<PersistentModel> ().To<PersistentModel> ().ToSingleton ();
             binder.Bind <PersistentModel.SeedChanged> ().To<PersistentModel.SeedChanged> ().ToSingleton ();
+            binder.Bind <StartNewGameSignal> ().To<StartNewGameSignal> ().ToSingleton ();
+            binder.Bind <LoadGameSignal> ().To<LoadGameSignal> ().ToSingleton ();
 
             var defs = binder.GetInstance<GameDefs> ();
             defs.Init (_defs);

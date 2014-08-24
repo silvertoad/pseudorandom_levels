@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System;
-using UnityEngine;
 using strange.extensions.signal.impl;
 
 namespace mvscs.model
 {
     public class PersistentModel
     {
-        public static string SAVE_PATH = Application.persistentDataPath + "/save.dat";
+        public const string SavePath = "save_path"; 
 
         public bool IsPlaying;
         public bool HasSave;

@@ -11,9 +11,11 @@ namespace command
     {
         [Inject] public PersistentModel persistent { set; get; }
 
+        [Inject (PersistentModel.SavePath)] public string SavePath  { set; get; }
+
         public override void Execute ()
         {
-            FileStream file = File.Create (PersistentModel.SAVE_PATH);
+            FileStream file = File.Create (SavePath);
             AddText (file, persistent.Sirialize ());
             file.Close ();
             persistent.HasSave = true;

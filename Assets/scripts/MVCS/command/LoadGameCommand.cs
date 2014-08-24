@@ -9,9 +9,11 @@ namespace command
         [Inject]
         public PersistentModel persistent { get; set; }
 
+        [Inject (PersistentModel.SavePath)] public string SavePath  { set; get; }
+
         public override void Execute ()
         {
-            var saveData = File.ReadAllText (PersistentModel.SAVE_PATH);
+            var saveData = File.ReadAllText (SavePath);
             persistent.Init (saveData);
         }
     }

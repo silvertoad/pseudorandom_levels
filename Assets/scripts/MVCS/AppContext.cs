@@ -80,5 +80,6 @@ public class AppContext : MVCSContext
         injectionBinder.Bind<RegionGenerator> ().To<RegionGenerator> ().ToSingleton ();
         injectionBinder.Bind<GameObject> ().To (entryPoint.GUI).ToName (EntryPoint.Containers.GUI);
         injectionBinder.Bind<GameObject> ().To (entryPoint.World).ToName (EntryPoint.Containers.World);
+        injectionBinder.Bind<string> ().To (Application.persistentDataPath + "/save.dat").ToName (PersistentModel.SavePath);
     }
 }

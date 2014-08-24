@@ -21,6 +21,8 @@ namespace command
         [Inject]
         public ShowMenuSignal showMenu { get; set; }
 
+        [Inject (PersistentModel.SavePath)] public string SavePath  { set; get; }
+
         public override void Execute ()
         {
             ReadDefs ();
@@ -37,7 +39,6 @@ namespace command
 
         void InitPresistent ()
         {
-            Debug.Log (PersistentModel.SAVE_PATH);
             persistent.HasSave = File.Exists (Application.persistentDataPath + "/save.dat");
         }
     }
