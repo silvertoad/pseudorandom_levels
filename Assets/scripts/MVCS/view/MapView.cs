@@ -16,19 +16,24 @@ public class MapView : View
     public GameObject player;
 
     public Point<int> currentPosition;
+    public Point<int> playerPos;
     List<RegionWidget> currentRegions = new List<RegionWidget> ();
 
-    public Signal<Point<int>> onPositionChange = new Signal<Point<int>> ();
+    public Signal<Point<int>> onRegionPositionChange = new Signal<Point<int>> ();
+    public Signal<Point<int>> onPlayerPositionChange = new Signal<Point<int>> ();
 
     void Update ()
     {
-        var actualPosition = GetPlayerPosition ();
+        var actualPosition = GetCurrentRegionPosition ();
         if (currentPosition != actualPosition) {
-            onPositionChange.Dispatch (actualPosition);
+            onRegionPositionChange.Dispatch (actualPosition);
         }
+        var actualPlayerPos = GetPlayerPosition ();
+        if (playerPos != actualPlayerPos)
+            onPlayerPositionChange.Dispatch (actualPlayerPos);
     }
 
-    Point<int> GetPlayerPosition ()
+    Point<int> GetCurrentRegionPosition ()
     {
         var regionRealSize = defs.CellSize * defs.RegionSize / 100f;
         var x = (player.transform.position.x) / regionRealSize;
@@ -36,6 +41,16 @@ public class MapView : View
         x += x < 0 ? -1 : 0;
         y += y < 0 ? -1 : 0;
         return new Point<int> ((int)x, (int)y);
+    }
+
+    Point<int> GetPlayerPosition ()
+    {
+        var regionRealSize = defs.CellSize * defs.RegionSize / 100f;
+        var x = (player.transform.position.x) / regionRealSize;
+        var y = (player.transform.position.y) / regionRealSize;
+        x = (player.transform.position.x - (int)x * regionRealSize) / (defs.CellSize / 100f);
+        y = (player.transform.position.y - (int)y * regionRealSize) / (defs.CellSize / 100f);
+        return new Point<int> (Math.Abs ((int)x), Math.Abs ((int)y));
     }
 
     public void SetDefaultRegion (Point<int> _defaultPosition)
@@ -85,6 +100,7 @@ public class MapView : View
 
     public void InitPlayer (Point<int> _playerPos)
     {
+        playerPos = _playerPos;
         player = GameUtils.InstantiateAt ("world/tank/tank", gameObject);
         var realCellSize = defs.CellSize / 100f;
 
@@ -111,8 +127,9 @@ public class MapView : View
     public void UpdateRegion (RegionModel _region)
     {
         foreach (var regionView in currentRegions)
-            if (regionView.Region.Position == _region.Position)
+            if (regionView.Region.Position == _region.Position) {
                 regionView.Draw (_region.MapItems.Last ());
+            }
     }
 
     RegionWidget GetRegion (Point<int> _point)

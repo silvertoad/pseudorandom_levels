@@ -1,7 +1,7 @@
 {
 	"region": {
         "size": 12,
-        "num_items": 25,
+        "num_items": 20,
         "gen_time": 5000,
         "cache_size": 20,
         "cell_size": 30
